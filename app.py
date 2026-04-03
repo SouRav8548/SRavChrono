@@ -1,8 +1,18 @@
+from flask import Flask, send_from_directory
+
+app = Flask(__name__, static_folder='.')
+
+@app.route('/')
+def serve_index():
+    return send_from_directory('.', 'index.html')
+
+# Ensure your other API routes remain below this
+
+
 from flask import Flask, request, jsonify  # type: ignore[import]
 from flask_cors import CORS  # type: ignore[import]
-from datetime import datetime, date, timedelta
+from datetime import datetime, date
 from dateutil.relativedelta import relativedelta
-import math
 
 app = Flask(__name__)
 CORS(app)
