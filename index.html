@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CHRONO — Time Calculation Suite</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Syne+Mono&family=Syne:wght@400;600;700;800&family=DM+Serif+Display:ital@0;1&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="noise"></div>
+
+    <!-- HEADER -->
+    <header>
+      <div class="logo" onclick="goHome()" style="cursor: pointer">
+        <span class="logo-mark">⌛</span>
+        <span class="logo-text">SRavChrono</span>
+        <span class="logo-sub">Time Calculation Suite</span>
+      </div>
+      <div class="clock-live" id="liveClock"></div>
+    </header>
+
+    <!-- NAV TABS -->
+    <nav class="tab-nav">
+      <button class="tab active" data-tab="convert">
+        <span class="tab-icon">⇄</span> Unit Convert
+      </button>
+      <button class="tab" data-tab="arithmetic">
+        <span class="tab-icon">±</span> Time Arithmetic
+      </button>
+      <button class="tab" data-tab="date-diff">
+        <span class="tab-icon">↔</span> Date Difference
+      </button>
+      <button class="tab" data-tab="date-adjust">
+        <span class="tab-icon">+</span> Date Adjust
+      </button>
+      <button class="tab" data-tab="birthday">
+        <span class="tab-icon">🎂</span> Birthday
+      </button>
+    </nav>
+
+    <!-- MAIN PANEL -->
+    <main class="panel">
+      <!-- ── UNIT CONVERSION ─────────────────────────────── -->
+      <section class="tab-content active" id="tab-convert">
+        <h2 class="section-title">Unit <em>Conversion</em></h2>
+
+        <div class="conv-row">
+          <!-- FROM block -->
+          <div class="conv-block conv-from">
+            <label>Convert From</label>
+            <select id="convFromUnit">
+              <option value="hours">Hours</option>
+              <option value="minutes">Minutes</option>
+              <option value="seconds">Seconds</option>
+              <option value="ms">Milliseconds</option>
+            </select>
+            <input
+              type="number"
+              id="convValue"
+              placeholder="Enter value"
+              min="0"
+              step="any"
+            />
+          </div>
+
+          <!-- Swap arrow -->
+          <button class="swap-btn" onclick="swapUnits()" title="Swap units">
+            ⇄
+          </button>
+
+          <!-- TO block -->
+          <div class="conv-block conv-to">
+            <label>Convert To</label>
+            <select id="convToUnit">
+              <option value="minutes">Minutes</option>
+              <option value="hours">Hours</option>
+              <option value="seconds">Seconds</option>
+              <option value="ms">Milliseconds</option>
+            </select>
+            <div class="conv-to-preview" id="convToPreview">—</div>
+          </div>
+        </div>
+
+        <button class="calc-btn" onclick="calcConvert()">Calculate</button>
+        <div class="result-box" id="resultConvert"></div>
+      </section>
+
+      <!-- ── TIME ARITHMETIC ────────────────────────────── -->
+      <section class="tab-content" id="tab-arithmetic">
+        <h2 class="section-title">Time <em>Arithmetic</em></h2>
+        <div class="time-pair">
+          <div class="time-inputs">
+            <span class="time-label">Duration A</span>
+            <div class="hmsms-row">
+              <div class="field-group">
+                <label>Hours</label
+                ><input type="number" id="a-h" placeholder="0" min="0" />
+              </div>
+              <div class="field-group">
+                <label>Minutes</label
+                ><input
+                  type="number"
+                  id="a-m"
+                  placeholder="0"
+                  min="0"
+                  max="59"
+                />
+              </div>
+              <div class="field-group">
+                <label>Seconds</label
+                ><input
+                  type="number"
+                  id="a-s"
+                  placeholder="0"
+                  min="0"
+                  max="59"
+                />
+              </div>
+              <div class="field-group">
+                <label>Ms</label
+                ><input
+                  type="number"
+                  id="a-ms"
+                  placeholder="0"
+                  min="0"
+                  max="999"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="op-selector">
+            <button class="op-btn active" data-op="add">＋</button>
+            <button class="op-btn" data-op="subtract">－</button>
+          </div>
+          <div class="time-inputs">
+            <span class="time-label">Duration B</span>
+            <div class="hmsms-row">
+              <div class="field-group">
+                <label>Hours</label
+                ><input type="number" id="b-h" placeholder="0" min="0" />
+              </div>
+              <div class="field-group">
+                <label>Minutes</label
+                ><input
+                  type="number"
+                  id="b-m"
+                  placeholder="0"
+                  min="0"
+                  max="59"
+                />
+              </div>
+              <div class="field-group">
+                <label>Seconds</label
+                ><input
+                  type="number"
+                  id="b-s"
+                  placeholder="0"
+                  min="0"
+                  max="59"
+                />
+              </div>
+              <div class="field-group">
+                <label>Ms</label
+                ><input
+                  type="number"
+                  id="b-ms"
+                  placeholder="0"
+                  min="0"
+                  max="999"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <button class="calc-btn" onclick="calcArithmetic()">Calculate</button>
+        <div class="result-box" id="resultArith"></div>
+      </section>
+
+      <!-- ── DATE DIFFERENCE ───────────────────────────── -->
+      <section class="tab-content" id="tab-date-diff">
+        <h2 class="section-title">Date <em>Difference</em></h2>
+        <div class="form-grid">
+          <div class="field-group">
+            <label>Start Date</label>
+            <input type="date" id="diffDate1" />
+          </div>
+          <div class="field-group">
+            <label>End Date</label>
+            <input type="date" id="diffDate2" />
+          </div>
+        </div>
+        <button class="calc-btn" onclick="calcDateDiff()">Calculate</button>
+        <div class="result-box" id="resultDiff"></div>
+      </section>
+
+      <!-- ── DATE ADJUST ────────────────────────────────── -->
+      <section class="tab-content" id="tab-date-adjust">
+        <h2 class="section-title">Date <em>Adjustment</em></h2>
+        <div class="form-grid">
+          <div class="field-group" style="grid-column: 1/-1">
+            <label>Starting Date</label>
+            <input type="date" id="adjustDate" />
+          </div>
+        </div>
+        <div class="op-selector linear" style="margin: 1rem 0">
+          <button class="op-btn active" data-adjop="add">Add</button>
+          <button class="op-btn" data-adjop="subtract">Subtract</button>
+        </div>
+        <div class="form-grid three-col">
+          <div class="field-group">
+            <label>Years</label>
+            <input type="number" id="adjYears" placeholder="0" min="0" />
+          </div>
+          <div class="field-group">
+            <label>Months</label>
+            <input type="number" id="adjMonths" placeholder="0" min="0" />
+          </div>
+          <div class="field-group">
+            <label>Days</label>
+            <input type="number" id="adjDays" placeholder="0" min="0" />
+          </div>
+        </div>
+        <button class="calc-btn" onclick="calcDateAdjust()">Calculate</button>
+        <div class="result-box" id="resultAdjust"></div>
+      </section>
+
+      <!-- ── BIRTHDAY ────────────────────────────────────── -->
+      <section class="tab-content" id="tab-birthday">
+        <h2 class="section-title"><em>Birthday</em> Calculator</h2>
+        <div class="form-grid">
+          <div class="field-group" style="grid-column: 1/-1">
+            <label>Date of Birth</label>
+            <input type="date" id="birthDate" />
+          </div>
+        </div>
+        <button class="calc-btn" onclick="calcBirthday()">Calculate</button>
+        <div class="result-box" id="resultBirthday"></div>
+      </section>
+    </main>
+
+    <footer>
+      <span
+        >CHRONO · All calculations performed server-side via Python ·
+        <code>localhost:5000</code></span
+      >
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
