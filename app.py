@@ -1,6 +1,8 @@
-from flask import Flask, send_from_directory
+from flask import Flask, request, jsonify, send_from_directory
+from flask_cors import CORS # 1. Add this import
 
-app = Flask(__name__, static_folder='.')
+app = Flask(__name__)
+CORS(app) # 2. Add this line right after 'app' is defined
 
 @app.route('/')
 def serve_index():

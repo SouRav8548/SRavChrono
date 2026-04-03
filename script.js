@@ -3,7 +3,7 @@
    All API calls go to Flask backend at localhost:5000
    ════════════════════════════════════════════════════════ */
 
-const API = "http://localhost:5000/api";
+const API_URL = "https://your-render-name.onrender.com";
 
 // ── Live clock ──────────────────────────────────────────
 function updateClock() {
@@ -67,8 +67,8 @@ document.querySelectorAll(".op-selector.linear .op-btn").forEach((btn) => {
 });
 
 // ── API helper ──────────────────────────────────────────
-async function apiPost(endpoint, body) {
-  const res = await fetch(`${API}${endpoint}`, {
+async function apiPost(_endpoint, body) {
+  const res = await fetch(`${API_URL}/api/convert`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(body),
