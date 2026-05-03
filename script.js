@@ -3,7 +3,9 @@
    All API calls go to Flask backend at localhost:5000
    ════════════════════════════════════════════════════════ */
 
-const API_URL = "https://your-render-name.onrender.com";
+// const API_URL = "https://your-render-name.onrender.com";
+
+const API_URL = "https://time-calc-dy2w.onrender.com";
 
 // ── Live clock ──────────────────────────────────────────
 function updateClock() {
